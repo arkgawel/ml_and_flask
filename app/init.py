@@ -49,7 +49,7 @@ def form():
         one_result = one_result[:,1]
         one_result = one_result * 100
         one_result = str(one_result)
-        return '<h1> These circumstances have {} % chance to fire'.format(one_result)
+        return '<h1> These circumstances have {} % chance to fire '.format(one_result)
 
 
     return ''' <form method = "POST">
