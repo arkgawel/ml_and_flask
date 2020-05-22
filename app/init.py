@@ -30,7 +30,6 @@ result = Analize(X_train, y_train).evaluate_model(X_test, y_test)
 #print (one_result2[:,1])
 
 
-
 app = Flask (__name__)
 
 @app.route('/form_example', methods=['POST', 'GET'])
