@@ -1,5 +1,5 @@
 import pandas as pd
-from flask import Flask, request
+from flask import Flask, request, jsonify
 from app.analize import Analize
 from app.data_loader import DataLoader
 from app.preprocessing import Preprocess
@@ -60,6 +60,25 @@ def form():
     <input type = "submit">
     </form>'''
 
+@app.route('/json_data', methods=['POST'])
+def get_json_data():
+    req_data = request.get_json()
+
+    temp = req_data['temp']
+    RH = req_data['RH']
+    wind = req_data['wind']
+    rain = req_data['rain']
+
+    input = {'temp': temp,
+             'RH': RH,
+             'wind': wind,
+             'rain': rain}
+    input = pd.DataFrame(input, columns=['temp', 'RH', 'wind', 'rain'], index=[0])
+    one_result = Analize(X_train, y_train).testing_model_prob(input)
+    one_result = one_result[:, 1]
+    one_result = one_result * 100
+    one_result = float(one_result)
+    return jsonify(probability = one_result)
 
 #if __name__ == '__main__':
 app.run(debug=False, port=5000)
